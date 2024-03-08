@@ -41,10 +41,11 @@ class Ui_MainWindow(object):
         self.label_color_intensity.setAlignment(QtCore.Qt.AlignCenter)
         self.label_color_intensity.setObjectName("label_color_intensity")
         self.verticalLayout.addWidget(self.label_color_intensity)
-        self.brightness_hist = HistogramLUTWidget(self.centralwidget)
-        self.brightness_hist.setObjectName("brightness_hist")
-        self.verticalLayout.addWidget(self.brightness_hist)
-        self.verticalLayout.setStretch(1, 5)
+        self.graphics_widget = GraphicsLayoutWidget(self.centralwidget)
+        self.graphics_widget.setMinimumSize(QtCore.QSize(0, 0))
+        self.graphics_widget.setObjectName("graphics_widget")
+        self.verticalLayout.addWidget(self.graphics_widget)
+        self.verticalLayout.setStretch(1, 3)
         self.verticalLayout.setStretch(3, 1)
         self.horizontal_layout.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -105,4 +106,4 @@ class Ui_MainWindow(object):
         self.action_open.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.action_save.setText(_translate("MainWindow", "Save"))
         self.action_save.setShortcut(_translate("MainWindow", "Ctrl+S"))
-from pyqtgraph import HistogramLUTWidget, ImageView
+from pyqtgraph import GraphicsLayoutWidget, ImageView

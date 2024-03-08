@@ -18,7 +18,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontal_layout" stretch="1,0">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,5,0,1">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,3,0,1">
         <item>
          <widget class="QLabel" name="label_pos_color">
           <property name="font">
@@ -56,11 +56,11 @@
          </widget>
         </item>
         <item>
-         <widget class="HistogramLUTWidget" name="brightness_hist">
+         <widget class="GraphicsLayoutWidget" name="graphics_widget">
           <property name="minimumSize">
            <size>
-            <width>300</width>
-            <height>300</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
          </widget>
@@ -183,7 +183,7 @@
    <header location="global">pyqtgraph.h</header>
   </customwidget>
   <customwidget>
-   <class>HistogramLUTWidget</class>
+   <class>GraphicsLayoutWidget</class>
    <extends>QGraphicsView</extends>
    <header location="global">pyqtgraph.h</header>
   </customwidget>
