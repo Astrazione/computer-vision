@@ -115,14 +115,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         image_with_pixel_border = image.copy()
 
-        delta = (border_size - 1) / 2
+        mean: int = 0
+        std: int = 0
+        delta = (border_size + 1) / 2
         x_start, x_end = int(max(x - delta, 0)), int(min(x + delta + 1, width))
         y_start, y_end = int(max(y - delta, 0)), int(min(y + delta + 1, height))
 
         for x_index in range(x_start, x_end):
             for y_index in range(y_start, y_end):
-                if x_index == x_start or x_index == x_end - 1 or y_index == y_start or y_index == y_end - 1:
+                if not (x_index == x_start or x_index == x_end or y_index == y_start or y_index == y + delta + 1):
+                    pixel = sum(image[x_index, y_index]) // 3
+                    mean += pixel
+
+        mean /= width / height
+
+        for x_index in range(x_start, x_end):
+            for y_index in range(y_start, y_end):
+                if x_index == x_start or x_index == x_end or y_index == y_start or y_index == y + delta + 1:
                     image_with_pixel_border[x_index, y_index] = np.array([0, 255, 255])
+                else:
+                    pixel = sum(image[x_index, y_index]) // 3
+                    std += (pixel - mean)**2
+
 
         return image_with_pixel_border
 
@@ -159,9 +173,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_blue_hist(self, b_channel):
         self.blue_plot.clearPlots()
         self.blue_plot.plot(x=list(range(256)), y=b_channel)
-
-
-
 
 
 if __name__ == '__main__':

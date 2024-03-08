@@ -21,10 +21,11 @@ def extract_red_channel(image):
 
 def convert_to_grayscale(image):
     height, width, _ = image.shape
-    gray_image = np.zeros((height, width), dtype=np.uint8)
+    # gray_image = np.zeros((height, width), dtype=np.uint8)\
+    gray_image = np.zeros_like(image)
 
     for i in range(height):
         for j in range(width):
             gray_value = sum(image[i, j]) // 3
-            gray_image[i, j] = gray_value
+            gray_image[i, j]: np.ndarray = np.array([gray_value, gray_value, gray_value])
     return gray_image
