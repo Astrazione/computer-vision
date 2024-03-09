@@ -27,11 +27,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.red_plot: pg.PlotItem = self.graphics_widget.addPlot(title="red")
         self.green_plot: pg.PlotItem = self.graphics_widget.addPlot(title="green")
         self.blue_plot: pg.PlotItem = self.graphics_widget.addPlot(title="blue")
-        self.color_channel_switch.clicked.connect(self.show_image)
+        self.color_channel_switch.clicked.connect(self.color_channel_switch_event)
         self.radio_red_channel.clicked.connect(self.show_image)
         self.radio_green_channel.clicked.connect(self.show_image)
         self.radio_blue_channel.clicked.connect(self.show_image)
         self.radio_grey_channel.clicked.connect(self.show_image)
+        self.pushButton_vertical_reflection.clicked.connect(self.reflect_image_vertical)
+        self.pushButton_horizontal_reflection.clicked.connect(self.reflect_image_horizontal)
+        self.pushButton_swap_color_red_green.clicked.connect(self.swap_red_green_channels)
+        self.pushButton_swap_color_green_blue.clicked.connect(self.swap_green_blue_channels)
+        self.pushButton_swap_color_red_blue.clicked.connect(self.swap_red_blue_channels)
+        self.pushButton_negative_color_red.clicked.connect(self.negate_red_channel)
+        self.pushButton_negative_color_green.clicked.connect(self.negate_green_channel)
+        self.pushButton_negative_color_blue.clicked.connect(self.negate_blue_channel)
 
         self.border_size = 11  # px
 
@@ -48,8 +56,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.source_image = cv2.imread(file_name).transpose(1, 0, 2)
         self.show_image()
 
-    def show_image(self):
-        self.build_image()
+    def color_channel_switch_event(self):
+        self.show_image()
+
+    def show_image(self, need_to_rebuild: bool = True):
+        if need_to_rebuild:
+            self.build_image()
 
         if self.image is not None:
             image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
@@ -99,46 +111,56 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         b, g, r = self.image[x, y]
 
-        self.label_pos_color.setText(f"pixel: ({x}, {y})  value: {r}, {g}, {b}")
-        self.label_color_intensity.setText(f"Интенсивность: {(r + g + b) // 3}")
-        self.simple_show_image(self.get_image_with_pixel_border(self.image, self.border_size, x, y))
+        self.label_pos_color.setText(f"Pixel position: ({x}, {y})  Value: {r}, {g}, {b}")
+        self.label_color_intensity.setText(f"Intensity: {(r + g + b) // 3}")
+
+        pixel_border_image, mean, std = self.get_image_with_calculated_pixel_border(self.image, self.border_size, x, y)
+
+        self.label_mean_std.setText(f"mean: {round(mean, 3)}  std: {round(mean, 3)}")
+
+        self.simple_show_image(pixel_border_image)
 
     def simple_show_image(self, image):
         if image is not None:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             self.image_item.setImage(image)
 
-    @staticmethod
-    def get_image_with_pixel_border(image, border_size, x, y):
-        width = image.shape[0]
-        height = image.shape[1]
+    def get_image_res(self):
+        return self.image.shape[0], self.image.shape[1]
 
-        image_with_pixel_border = image.copy()
+    def reflect_image_vertical(self):
+        self.image = self.image[:, ::-1, :]
+        self.source_image = self.source_image[:, ::-1, :]
+        self.show_image(False)
 
-        mean: int = 0
-        std: int = 0
-        delta = (border_size + 1) / 2
-        x_start, x_end = int(max(x - delta, 0)), int(min(x + delta + 1, width))
-        y_start, y_end = int(max(y - delta, 0)), int(min(y + delta + 1, height))
+    def reflect_image_horizontal(self):
+        self.image = self.image[::-1, :, :]
+        self.source_image = self.source_image[::-1, :, :]
+        self.show_image(False)
 
-        for x_index in range(x_start, x_end):
-            for y_index in range(y_start, y_end):
-                if not (x_index == x_start or x_index == x_end or y_index == y_start or y_index == y + delta + 1):
-                    pixel = sum(image[x_index, y_index]) // 3
-                    mean += pixel
+    def swap_red_green_channels(self):
+        swap_channels(self.source_image, 2, 1)
+        self.show_image()
 
-        mean /= width / height
+    def swap_green_blue_channels(self):
+        swap_channels(self.source_image, 1, 0)
+        self.show_image()
 
-        for x_index in range(x_start, x_end):
-            for y_index in range(y_start, y_end):
-                if x_index == x_start or x_index == x_end or y_index == y_start or y_index == y + delta + 1:
-                    image_with_pixel_border[x_index, y_index] = np.array([0, 255, 255])
-                else:
-                    pixel = sum(image[x_index, y_index]) // 3
-                    std += (pixel - mean)**2
+    def swap_red_blue_channels(self):
+        swap_channels(self.source_image, 2, 0)
+        self.show_image()
 
+    def negate_red_channel(self):
+        negative_image_red_channel(self.source_image)
+        self.show_image()
 
-        return image_with_pixel_border
+    def negate_green_channel(self):
+        negative_image_green_channel(self.source_image)
+        self.show_image()
+
+    def negate_blue_channel(self):
+        negative_image_blue_channel(self.source_image)
+        self.show_image()
 
     def create_brightness_hists(self):
         width = self.image.shape[0]

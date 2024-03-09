@@ -87,7 +87,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
         <item>
          <widget class="QGroupBox" name="color_channel_switch">
           <property name="title">
@@ -149,6 +149,131 @@
            </property>
            <property name="text">
             <string>Grey</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Refletion</string>
+          </property>
+          <widget class="QPushButton" name="pushButton_vertical_reflection">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Vertical</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_horizontal_reflection">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Horizontal</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Color swap</string>
+          </property>
+          <widget class="QPushButton" name="pushButton_swap_color_red_green">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Red &amp;&amp; Green</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_swap_color_green_blue">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Green &amp;&amp; Blue</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_swap_color_red_blue">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>60</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Red &amp;&amp; Blue</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Color negative</string>
+          </property>
+          <widget class="QPushButton" name="pushButton_negative_color_red">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Red</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_negative_color_green">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Green</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_negative_color_blue">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>60</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Blue</string>
            </property>
           </widget>
          </widget>
