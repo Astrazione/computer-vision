@@ -7,6 +7,8 @@ import pyqtgraph as pg
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from UI.photoshopUI import Ui_MainWindow
 from Logic.color_channel_transform import *
+from Logic.blur_saturation import *
+from Logic.visualization import *
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -98,8 +100,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def image_hover_event(self, event):
         if event.isExit():
-            self.label_pos_color.setText("")
-            self.label_color_intensity.setText("")
+            self.label_pos_color.setText("Pos & color")
+            self.label_color_intensity.setText("Color intensity")
+            self.label_mean_std.setText("Mean & std")
             self.simple_show_image(self.image)
             return
 
@@ -114,9 +117,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_pos_color.setText(f"Pixel position: ({x}, {y})  Value: {r}, {g}, {b}")
         self.label_color_intensity.setText(f"Intensity: {(r + g + b) // 3}")
 
-        pixel_border_image, mean, std = self.get_image_with_calculated_pixel_border(self.image, self.border_size, x, y)
+        pixel_border_image, mean, std = get_image_with_calculated_pixel_border(self.image, self.border_size, x, y)
 
-        self.label_mean_std.setText(f"mean: {round(mean, 3)}  std: {round(mean, 3)}")
+        self.label_mean_std.setText(f"Mean: {round(mean, 2)}  Std: {round(std, 2)}")
 
         self.simple_show_image(pixel_border_image)
 
@@ -160,6 +163,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def negate_blue_channel(self):
         negative_image_blue_channel(self.source_image)
+        self.show_image()
+
+    def blur_4_pixels(self):
+        self.source_image = blur_image_4_connectivity(self.source_image)
+        self.show_image()
+
+    def blur_8_pixels(self):
+        self.source_image = blur_image_8_connectivity(self.source_image)
         self.show_image()
 
     def create_brightness_hists(self):

@@ -87,7 +87,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
         <item>
          <widget class="QGroupBox" name="color_channel_switch">
           <property name="title">
@@ -278,6 +278,13 @@
           </widget>
          </widget>
         </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string/>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -300,7 +307,15 @@
     <addaction name="action_open"/>
     <addaction name="action_save"/>
    </widget>
+   <widget class="QMenu" name="menuBlur">
+    <property name="title">
+     <string>Blur</string>
+    </property>
+    <addaction name="action_blur_4_pixels"/>
+    <addaction name="action_blur_8_pixels"/>
+   </widget>
    <addaction name="menu_file"/>
+   <addaction name="menuBlur"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
@@ -317,6 +332,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_blur_4_pixels">
+   <property name="text">
+    <string>4 pixels</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B, Ctrl+4</string>
+   </property>
+  </action>
+  <action name="action_blur_8_pixels">
+   <property name="text">
+    <string>8 pixels</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B, Ctrl+8</string>
    </property>
   </action>
  </widget>
