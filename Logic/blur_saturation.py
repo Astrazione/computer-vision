@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def blur_image_4_connectivity(image):
     height, width, channels = image.shape
     blurred_image = np.zeros_like(image, dtype=np.uint8)

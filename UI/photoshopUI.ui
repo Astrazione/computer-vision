@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
-    <height>600</height>
+    <width>911</width>
+    <height>1014</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontal_layout" stretch="1,0">
+     <layout class="QHBoxLayout" name="horizontal_layout" stretch="8,2">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,3,0,1">
         <item>
@@ -87,7 +87,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,1,1,4">
         <item>
          <widget class="QGroupBox" name="color_channel_switch">
           <property name="title">
@@ -156,15 +156,15 @@
         <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Refletion</string>
+           <string>Reflection</string>
           </property>
           <widget class="QPushButton" name="pushButton_vertical_reflection">
            <property name="geometry">
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>81</width>
-             <height>21</height>
+             <width>141</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -175,9 +175,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>40</y>
-             <width>81</width>
-             <height>21</height>
+             <y>50</y>
+             <width>141</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -196,8 +196,8 @@
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>81</width>
-             <height>21</height>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -208,9 +208,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>40</y>
-             <width>81</width>
-             <height>21</height>
+             <y>50</y>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -221,9 +221,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>60</y>
-             <width>81</width>
-             <height>21</height>
+             <y>80</y>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -242,8 +242,8 @@
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>81</width>
-             <height>21</height>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -254,9 +254,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>40</y>
-             <width>81</width>
-             <height>21</height>
+             <y>50</y>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -267,9 +267,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>60</y>
-             <width>81</width>
-             <height>21</height>
+             <y>80</y>
+             <width>151</width>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
@@ -281,8 +281,290 @@
         <item>
          <widget class="QGroupBox" name="groupBox_4">
           <property name="title">
-           <string/>
+           <string>Brightness</string>
           </property>
+          <widget class="QSlider" name="horizontalSlider_brightness">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>20</y>
+             <width>151</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-255</number>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QSlider" name="horizontalSlider_brightness_red">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>50</y>
+             <width>151</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-255</number>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QSlider" name="horizontalSlider_brightness_green">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>80</y>
+             <width>151</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-255</number>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QSlider" name="horizontalSlider_brightness_blue">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>110</y>
+             <width>151</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-255</number>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>50</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>R</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>110</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>B</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>80</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>G</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_4">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>All</string>
+           </property>
+          </widget>
+          <widget class="QSpinBox" name="spinBox_brightness_str_number">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>170</y>
+             <width>171</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="toolTip">
+            <string>String number</string>
+           </property>
+           <property name="maximum">
+            <number>5000</number>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_5">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>140</y>
+             <width>68</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Profile</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_calculate_brightness_profile">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>200</y>
+             <width>93</width>
+             <height>28</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Show</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_6">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>240</y>
+             <width>68</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Contrast</string>
+           </property>
+          </widget>
+          <widget class="QSlider" name="horizontalSlider_contrast">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>270</y>
+             <width>171</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-100</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QSlider" name="horizontalSlider_saturation">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>320</y>
+             <width>171</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="minimum">
+            <number>-255</number>
+           </property>
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_7">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>290</y>
+             <width>81</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Saturation</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_8">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>360</y>
+             <width>191</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Contrast map pixels count</string>
+           </property>
+          </widget>
+          <widget class="QSpinBox" name="spinBox_contrast_map">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>390</y>
+             <width>171</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="toolTip">
+            <string>String number</string>
+           </property>
+           <property name="minimum">
+            <number>4</number>
+           </property>
+           <property name="maximum">
+            <number>5000</number>
+           </property>
+           <property name="singleStep">
+            <number>2</number>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_reload_hists">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>420</y>
+             <width>141</width>
+             <height>28</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Reload histograms</string>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -296,7 +578,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>783</width>
+     <width>911</width>
      <height>21</height>
     </rect>
    </property>
@@ -314,8 +596,24 @@
     <addaction name="action_blur_4_pixels"/>
     <addaction name="action_blur_8_pixels"/>
    </widget>
+   <widget class="QMenu" name="menuContrast_map">
+    <property name="title">
+     <string>Contrast map</string>
+    </property>
+    <addaction name="action_contrast_map_4_pixels"/>
+    <addaction name="action_contrast_map_8_pixels"/>
+    <addaction name="action_contrast_map_variable_pixels"/>
+   </widget>
+   <widget class="QMenu" name="menuReaload_historams">
+    <property name="title">
+     <string>Reaload historams</string>
+    </property>
+    <addaction name="actionReaload_hists"/>
+   </widget>
    <addaction name="menu_file"/>
    <addaction name="menuBlur"/>
+   <addaction name="menuContrast_map"/>
+   <addaction name="menuReaload_historams"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
@@ -348,6 +646,29 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+B, Ctrl+8</string>
+   </property>
+  </action>
+  <action name="action_contrast_map_4_pixels">
+   <property name="text">
+    <string>4 pixels</string>
+   </property>
+  </action>
+  <action name="action_contrast_map_8_pixels">
+   <property name="text">
+    <string>8 pixels</string>
+   </property>
+  </action>
+  <action name="action_contrast_map_variable_pixels">
+   <property name="text">
+    <string>variable pix count</string>
+   </property>
+  </action>
+  <action name="actionReaload_hists">
+   <property name="text">
+    <string>Reaload</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

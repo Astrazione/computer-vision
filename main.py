@@ -14,6 +14,7 @@ from Logic.visualization import *
 class MainWindow(QMainWindow, Ui_MainWindow):
     source_image = None
     image = None
+    image_copy = None
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -42,7 +43,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushButton_negative_color_red.clicked.connect(self.negate_red_channel)
         self.pushButton_negative_color_green.clicked.connect(self.negate_green_channel)
         self.pushButton_negative_color_blue.clicked.connect(self.negate_blue_channel)
-
+        self.action_blur_4_pixels.triggered.connect(self.blur_4_pixels)
+        self.action_blur_8_pixels.triggered.connect(self.blur_8_pixels)
+        self.pushButton_calculate_brightness_profile.clicked.connect(self.show_brightness_profile)
+        self.horizontalSlider_brightness.sliderMoved.connect(self.change_brightness)
+        self.horizontalSlider_brightness_red.sliderMoved.connect(self.change_brightness_red)
+        self.horizontalSlider_brightness_green.sliderMoved.connect(self.change_brightness_green)
+        self.horizontalSlider_brightness_blue.sliderMoved.connect(self.change_brightness_blue)
+        self.horizontalSlider_contrast.sliderReleased.connect(self.change_contrast)
+        self.horizontalSlider_saturation.sliderMoved.connect(self.change_saturation)
+        self.action_contrast_map_4_pixels.triggered.connect(self.show_contrast_map_4_pixels)
+        self.action_contrast_map_8_pixels.triggered.connect(self.show_contrast_map_8_pixels)
+        self.action_contrast_map_variable_pixels.triggered.connect(self.show_contrast_map_variable_pixels)
+        self.pushButton_reload_hists.clicked.connect(self.reload_hists_event)
+        self.actionReaload_hists.triggered.connect(self.reload_hists_event)
         self.border_size = 11  # px
 
     def open_image(self):
@@ -68,11 +82,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.image is not None:
             image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
             self.image_item.setImage(image)
+            self.create_brightness_hists()
 
     def build_image(self):
         self.image = self.source_image
-        self.image = self.change_color_channel(self.image)
-        self.create_brightness_hists()
+        if self.color_channel_switch.isChecked():
+            self.image = self.change_color_channel(self.image)
+        # self.create_brightness_hists()
 
     def change_color_channel(self, image):
         if not self.color_channel_switch.isChecked():
@@ -117,16 +133,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_pos_color.setText(f"Pixel position: ({x}, {y})  Value: {r}, {g}, {b}")
         self.label_color_intensity.setText(f"Intensity: {(r + g + b) // 3}")
 
-        pixel_border_image, mean, std = get_image_with_calculated_pixel_border(self.image, self.border_size, x, y)
+        pixel_border_image, mean, std = get_image_with_calculated_pixel_border(self.image.copy(), self.border_size, x, y)
 
         self.label_mean_std.setText(f"Mean: {round(mean, 2)}  Std: {round(std, 2)}")
 
         self.simple_show_image(pixel_border_image)
 
-    def simple_show_image(self, image):
+    def simple_show_image(self, image, reload_hists=False):
         if image is not None:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            self.image_item.setImage(image)
+            self.image_item.updateImage(image)
+            if reload_hists:
+                self.create_brightness_hists()
+
+    def reload_hists_event(self):
+        self.create_brightness_hists()
 
     def get_image_res(self):
         return self.image.shape[0], self.image.shape[1]
@@ -173,6 +194,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.source_image = blur_image_8_connectivity(self.source_image)
         self.show_image()
 
+    def show_brightness_profile(self):
+        str_number = self.spinBox_brightness_str_number.value()
+        brightness_profile(self.image, str_number)
+
     def create_brightness_hists(self):
         width = self.image.shape[0]
         height = self.image.shape[1]
@@ -206,6 +231,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_blue_hist(self, b_channel):
         self.blue_plot.clearPlots()
         self.blue_plot.plot(x=list(range(256)), y=b_channel)
+
+    def change_brightness(self):
+        self.image = increase_brightness(self.source_image, self.horizontalSlider_brightness.value())
+        self.simple_show_image(self.image)
+
+    def change_brightness_red(self):
+        self.image = increase_brightness_red_channel(self.source_image.copy(), self.horizontalSlider_brightness_red.value())
+        self.simple_show_image(self.image)
+
+    def change_brightness_green(self):
+        self.image = increase_brightness_green_channel(self.source_image.copy(), self.horizontalSlider_brightness_green.value())
+        self.simple_show_image(self.image)
+
+    def change_brightness_blue(self):
+        self.image = increase_brightness_blue_channel(self.source_image.copy(), self.horizontalSlider_brightness_blue.value())
+        self.simple_show_image(self.image)
+
+    def change_contrast(self):
+        val = self.horizontalSlider_contrast.value()
+        print(val)
+        self.image = increase_contrast(self.source_image.copy(), self.horizontalSlider_contrast.value())
+        self.simple_show_image(self.image)
+
+    def change_saturation(self):
+        self.image = increase_saturation(self.source_image.copy(), self.horizontalSlider_saturation.value())
+        self.simple_show_image(self.image)
+
+    def show_contrast_map_4_pixels(self):
+        self.image = create_contrast_map(self.source_image.copy(), 4)
+        self.simple_show_image(self.image)
+
+    def show_contrast_map_8_pixels(self):
+        self.image = create_contrast_map(self.source_image.copy(), 4)
+        self.simple_show_image(self.image)
+
+    def show_contrast_map_variable_pixels(self):
+        self.image = create_contrast_map(self.source_image.copy(), self.spinBox_contrast_map.value())
+        self.simple_show_image(self.image)
 
 
 if __name__ == '__main__':
