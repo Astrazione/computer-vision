@@ -5,39 +5,35 @@ import matplotlib.pyplot as plt
 
 # neighbor_count - min = 4, а также из этого числа можно взять корень прибавив 1
 def create_contrast_map(image, neighbor_count=4):
-    neighbor_indices = []
 
     if neighbor_count == 4:
         neighbor_indices = [(0, 1), (1, 0), (0, 0), (0, -1), (-1, 0)]
-    elif int(math.sqrt(neighbor_count + 1)) != math.sqrt(neighbor_count + 1):
+    elif (int(math.sqrt(neighbor_count + 1)) != math.sqrt(neighbor_count + 1)) or (neighbor_count % 2 == 1):
         return image
     else:
         n = int(math.sqrt(neighbor_count))
         neighbor_indices = [(i, j) for i in range(-n // 2, n // 2 + 1) for j in range(-n // 2, n // 2 + 1)]
 
     height, width, _ = image.shape
-
     contrast_map = np.zeros_like(image, dtype=np.uint8)
-
-    avg_r, avg_g, avg_b = image[:, :, 2].mean(), image[:, :, 1].mean(), image[:, :, 0].mean()
-    avg = (float(avg_r) + float(avg_g) + float(avg_b)) // 3
 
     for i in range(height - 1):
         for j in range(width - 1):
+            pixel = image[i, j]
+            avg = (int(pixel[2]) + int(pixel[1]) + int(pixel[0])) // 3
             neighbor_min = avg
             neighbor_max = avg
             for index in neighbor_indices:
-                neighborPixel  = image[min(max(0, i + index[0]), height - 1), min(max(0, j + index[1]), width - 1)]
-                tmp = (int(neighborPixel[0]) + int(neighborPixel[1]) + int(neighborPixel[2])) // 3
+                neighbor_pixel = image[min(max(0, i + index[0]), height - 1), min(max(0, j + index[1]), width - 1)]
+                tmp = (int(neighbor_pixel[0]) + int(neighbor_pixel[1]) + int(neighbor_pixel[2])) // 3
 
                 if tmp < neighbor_min:
                     neighbor_min = tmp
                 elif tmp > neighbor_max:
                     neighbor_max = tmp
 
-            contrast_coef = round((neighbor_max - neighbor_min) / (neighbor_max + neighbor_min) * 255)
+            contrast_coef = round((neighbor_max - neighbor_min) / (neighbor_max + neighbor_min + 0.1) * 255)
             contrast_map[i, j] = [contrast_coef, contrast_coef, contrast_coef]
-
 
     return contrast_map
 
@@ -76,7 +72,7 @@ def get_image_with_calculated_pixel_border(image, border_size, x, y):
 
 
 def brightness_profile(image, index_row):
-    row = image[index_row]
+    row = image[:, index_row]
 
     brightness_values = [np.mean(pixel) for pixel in row]
 
@@ -88,3 +84,19 @@ def brightness_profile(image, index_row):
     ax.set_ylim(0, 255)
 
     fig.show()
+
+
+def create_contrast_map_legend():
+    plt.close()
+
+    gradient = np.linspace(1, 0, 100)
+    img = gradient.reshape(-1, 1)
+
+    fig, ax = plt.subplots(num="Contrast map legend")
+    ax.imshow(img, cmap='gray', aspect='auto', extent=(0, 1, 0, 1))
+
+    ax.text(0.5, 0.05, 'Низкая контрастность', color='white', fontsize=12, ha='center')
+    ax.text(0.5, 0.95, 'Высокая контрастность', color='black', fontsize=12, ha='center')
+    ax.axis('off')
+
+    plt.show()

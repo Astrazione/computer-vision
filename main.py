@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.horizontalSlider_brightness_green.sliderMoved.connect(self.change_brightness_green)
         self.horizontalSlider_brightness_blue.sliderMoved.connect(self.change_brightness_blue)
         self.horizontalSlider_contrast.sliderReleased.connect(self.change_contrast)
-        self.horizontalSlider_saturation.sliderMoved.connect(self.change_saturation)
+        self.horizontalSlider_saturation.sliderReleased.connect(self.change_saturation)
         self.action_contrast_map_4_pixels.triggered.connect(self.show_contrast_map_4_pixels)
         self.action_contrast_map_8_pixels.triggered.connect(self.show_contrast_map_8_pixels)
         self.action_contrast_map_variable_pixels.triggered.connect(self.show_contrast_map_variable_pixels)
@@ -88,7 +88,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.image = self.source_image
         if self.color_channel_switch.isChecked():
             self.image = self.change_color_channel(self.image)
-        # self.create_brightness_hists()
 
     def change_color_channel(self, image):
         if not self.color_channel_switch.isChecked():
@@ -261,14 +260,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def show_contrast_map_4_pixels(self):
         self.image = create_contrast_map(self.source_image.copy(), 4)
         self.simple_show_image(self.image)
+        create_contrast_map_legend()
 
     def show_contrast_map_8_pixels(self):
         self.image = create_contrast_map(self.source_image.copy(), 4)
         self.simple_show_image(self.image)
+        create_contrast_map_legend()
 
     def show_contrast_map_variable_pixels(self):
         self.image = create_contrast_map(self.source_image.copy(), self.spinBox_contrast_map.value())
         self.simple_show_image(self.image)
+        create_contrast_map_legend()
 
 
 if __name__ == '__main__':

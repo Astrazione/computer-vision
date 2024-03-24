@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from Logic.rgb_hsv_converter import *
 
 
 def extract_blue_channel(image):
@@ -64,14 +65,8 @@ def swap_channels(image, channel1, channel2):
 
 
 def increase_brightness(image, value):
-    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-    h, s, v = cv2.split(hsv)
-
-    v = np.clip(cv2.add(v, value), 0, 255)
-
-    final_hsv = cv2.merge((h, s, v))
-    image = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2RGB)
-    return image
+    image_copy = image.copy().astype(np.uint16)
+    return np.clip(image_copy + value, 0, 255).astype(np.uint8)
 
 
 def increase_brightness_red_channel(image, value):
@@ -111,27 +106,38 @@ def increase_brightness_blue_channel(image, value):
 #
 #     return image
 
+# def increase_contrast(image, factor):
+#     height, width, channels = image.shape
+#
+#     factor = (100.0 + factor) / 100.0
+#     factor *= factor
+#
+#     for y in range(height):
+#         for x in range(width):
+#             image[y, x, 0] = np.clip(((image[y, x, 0] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
+#             image[y, x, 1] = np.clip(((image[y, x, 1] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
+#             image[y, x, 2] = np.clip(((image[y, x, 2] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
+#
+#     return image
+
 def increase_contrast(image, factor):
-    height, width, channels = image.shape
-
     factor = (100.0 + factor) / 100.0
-    factor *= factor
 
-    for x in range(width):
-        for y in range(height):
-            image[y, x, 0] = np.clip(((image[y, x, 0] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
-            image[y, x, 1] = np.clip(((image[y, x, 1] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
-            image[y, x, 2] = np.clip(((image[y, x, 2] / 255 - 0.5) * factor + 0.5) * 255, 0, 255)
+    normalized_image = image.astype(np.float64) / 255.0  # Normalize image to 0-1 range
+    normalized_image -= 0.5
+    adjusted_image = normalized_image * factor + 0.5
+    clipped_image = np.clip(adjusted_image * 255.0, 0, 255).astype(np.uint8)  # Clip and convert back to uint8
 
-    return image
+    return clipped_image
 
 
 def increase_saturation(image, value):
-    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-    h, s, v = cv2.split(hsv)
+    hsv = rgb_to_hsv_vectorized(image)
 
-    s = np.clip(cv2.add(s, value), 0, 255)
+    s = hsv[:, :, 1] + value / 255
+    s = np.clip(s, 0, 1)
+    hsv[:, :, 1] = s
 
-    final_hsv = cv2.merge((h, s, v))
-    image = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2RGB)
-    return image
+    rgb = hsv_to_rgb_vectorized(hsv)
+    return rgb
+
